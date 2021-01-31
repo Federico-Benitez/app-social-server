@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 
 const typeDefs = require("./graphql/typeDefs");
 const resolvers = require("./graphql/resolvers");
-const { MONGODB } = require("./config");
 
 const pubsub = new PubSub();
 
@@ -16,10 +15,14 @@ const server = new ApolloServer({
 });
 
 mongoose
-  .connect(process.env.MONGODB_URI || MONGODB, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
+  .connect(
+    process.env.MONGODB_URI ||
+      "mongodb+srv://fede:YN0nYHrCE3svydRi@cluster0.jp00p.mongodb.net/merng?retryWrites=true&w=majority",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    }
+  )
   .then(() => {
     return server.listen({ port: PORT });
   })
